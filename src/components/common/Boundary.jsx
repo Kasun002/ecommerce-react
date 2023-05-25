@@ -1,38 +1,18 @@
 import PropType from 'prop-types';
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 
-class Boundary extends Component {
-  static getDerivedStateFromError() {
-    return { hasError: true };
+const Boundary = ({ children }) => {
+
+  const [hasError, setHasError] = useState(false);
+
+  if (hasError) {
+    return (
+      <div className="loader">
+        <h3>:( Something went wrong.</h3>
+      </div>
+    )
   }
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      hasError: false
-    };
-  }
-
-
-  componentDidCatch(error) {
-    console.log(error);
-  }
-
-  render() {
-    const { hasError } = this.state;
-    const { children } = this.props;
-
-    if (hasError) {
-      return (
-        <div className="loader">
-          <h3>:( Something went wrong.</h3>
-        </div>
-      );
-    }
-
-    return children;
-  }
+  return children;
 }
 
 Boundary.propTypes = {
